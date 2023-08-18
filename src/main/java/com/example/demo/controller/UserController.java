@@ -47,22 +47,26 @@ public class UserController {
             return new ResponseEntity<>("Login failed",HttpStatus.OK);
         }
     }
-    @GetMapping("/search/{pname}")
+    @GetMapping("/searc/{pname}")
     public List<Product> searchProductByProductName(@PathVariable String pname) {
     	return productService.searchProductsByName(pname);
     }
-    @GetMapping("/viewproducts")
+    @GetMapping("/viewproduct")
     public List<Product> getAllProducts(){
 		return productService.getAllProducts();	
     }
     
-//    @PostMapping("/addToCart")
-//    public ResponseEntity<String> addToCart(@RequestParam String username, @RequestBody Cart cart) {
-//        User user = userService.getUserByUsername(username);
-//        List<Product> products = productService.getProductsByIds(cart.getProductid());
-//        orderService.addToCart(user, products);
-//        return ResponseEntity.ok("Added to cart successfully");
-//    }
-    
-}
+    @PostMapping("/addToCart/{username}")
+    public ResponseEntity<String> addToCart(@PathVariable("username") String username, @RequestBody List<Long> cart) {
+        userService.addToCart(username, cart);
+        return ResponseEntity.ok("Added to cart successfully");
+    }
+    @PostMapping("/submitCart/{username}")
+    public ResponseEntity<Order> submitCart(@PathVariable String username) {
+        User user = userService.getUserByUsername(username);
+        Order order = orderService.submitCart(user);
+        return ResponseEntity.ok(order);
+    }
+    }
+
 

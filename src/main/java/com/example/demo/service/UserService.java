@@ -13,6 +13,6 @@ public interface UserService {
 	String blockUser(String username);
 	User login(String username, String password);
 	String releaseUser(String username);
-	void addToCart(String username,List<Product> products);
+	void addToCart(String username,List<Long> productId);
 	User editUserProfile(String username, User user);
 }

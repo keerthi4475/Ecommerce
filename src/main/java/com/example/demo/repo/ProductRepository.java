@@ -11,6 +11,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
     List<Product> findByItemtype(String itemtype);
     @Query(value = "SELECT * FROM product WHERE name LIKE %:byname%", nativeQuery = true)
     List<Product> searchProductsByName(String byname);
-    
+    @Query(value="select id from product",nativeQuery=true)
+    List<Long> getAllIds();
     
 }

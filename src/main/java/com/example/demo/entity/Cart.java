@@ -2,14 +2,37 @@ package com.example.demo.entity;
 
 import java.util.List;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+@Entity
 public class Cart {
-	private List<Long> productid;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	@ManyToOne
+	private User user;
+	
+	public User getUser() {
+		return user;
+	}
 
-	public List<Long> getProductid() {
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	private long productid;
+
+	public long getProductid() {
 		return productid;
 	}
 
-	public void setProductid(List<Long> productid) {
+	public void setProductid(long productid) {
 		this.productid = productid;
 	}
 	

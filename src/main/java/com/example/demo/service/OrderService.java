@@ -11,6 +11,5 @@ public interface OrderService {
 	List<Order> getOrdersByUser(User user);
 	String deleteOrder(Long orderId);
 	List<Order> viewOrdersByUsername(String username);
-	//void addToCart(User user, List<Product> products);
-
+	Order submitCart(User user);
 }
