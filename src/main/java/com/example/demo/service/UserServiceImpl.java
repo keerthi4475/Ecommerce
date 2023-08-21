@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Cart;
+import com.example.demo.entity.EditProfileRequest;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.User;
 import com.example.demo.repo.CartRepository;
@@ -63,27 +64,42 @@ public class UserServiceImpl implements UserService{
 		for(int i=0;i<products.size();i++)
 		{
 		Cart cart=new Cart();
-		cart.setUser(user);
 		if(list.contains(products.get(i)))
 		{
 			cart.setProductid(products.get(i));
+			
+			List<Cart> c=user.getCart();
+			c.add(cart);
+			user.setCart(c);
 			cartrepo.save(cart);
+			userrepo.save(user);		
 		}
 		}
 	}
-	
-//	@Override
-//	public User editUserProfile(String username, User user) {
-//		 User user1 = getUserByUsername(username);
-//	        user1.setEmail(email);
-//	        user1.setUsername(username);
-//	        user1.setPassword(password);
-//	return userrepo.save(user1);
-//	}
+
 	@Override
-	public User editUserProfile(String username, User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public User updateUser(Long userId, User updatedUser) {
+		User existingUser = userrepo.findById(userId).orElse(null);
+	        //    .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+	        if (updatedUser.getUsername() != null) {
+	            existingUser.setUsername(updatedUser.getUsername());
+	        }
+	        if (updatedUser.getPassword() != null) {
+	            existingUser.setPassword(updatedUser.getPassword());
+	        }
+	        if (updatedUser.getEmail() != null) {
+	            existingUser.setEmail(updatedUser.getEmail());
+	        }
+	        if (updatedUser.getBlocked() != null) {
+	            existingUser.setBlocked(updatedUser.getBlocked());
+	        }
+	        if (updatedUser.getCart() != null) {
+	            existingUser.setCart(updatedUser.getCart());
+	        }
+
+	        return userrepo.save(existingUser);
+	    }
+
 	}
 	
-}

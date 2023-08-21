@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import com.example.demo.entity.EditProfileRequest;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.User;
 
@@ -14,5 +15,5 @@ public interface UserService {
 	User login(String username, String password);
 	String releaseUser(String username);
 	void addToCart(String username,List<Long> productId);
-	User editUserProfile(String username, User user);
+	User updateUser(Long userId, User updatedUser);
 }
